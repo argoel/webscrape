@@ -2,14 +2,12 @@
 
 0) install scrapy if required
 
-1) go to merDir
+1) go to amazon
 
-2) scrapy crawl yelp
+2) scrapy crawl amazonURL -o items.json
 
-3) check yelpURLs file, it should have all yelp urls
+3) json of all products inside shoesAsins is stored in items.json 
 
-4) scrapy crawl yelpURL
+To scrape up product ids, do scrapy crawl amazon
 
-5) this will bring all merchant contact information inside yelpDir
-
-You can change parameters inside /merDir/spiders/yelp_spider.py or yelpURL_spider.py: add any appropriate search/location criteria
+It stores all product ids inside amazonURLs file in base amazon folder
