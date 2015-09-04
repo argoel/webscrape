@@ -14,6 +14,8 @@ class AmazonSpider(Spider):
     print "Parsing response"
     
     item = AmazonItem()
+    item['productURL'] = response.url
+    item['productId'] = response.url.rsplit('/',1)[1]
     ppd = response.xpath('//div[@id="ppd"]')
     leftCol = ppd.xpath('//div[@id="leftCol"]')
 
@@ -29,12 +31,15 @@ class AmazonSpider(Spider):
     productTitle = centerCol.xpath('//span[@id="productTitle"]/text()').extract()[0]
     item['productTitle'] = productTitle
 
-    avgCustomerReviews = centerCol.xpath('//span[@class="reviewCountTextLinkedHistogram noUnderline"]/@title').extract()[0]
-    item['avgCustomerReviews']=avgCustomerReviews
+    try:
+      avgCustomerReviews = centerCol.xpath('//span[@class="reviewCountTextLinkedHistogram noUnderline"]/@title').extract()[0]
+      item['avgCustomerReviews']=avgCustomerReviews
 
-    numberOfReviews = centerCol.xpath('//span[@id="acrCustomerReviewText"]/text()').extract()[0]
-    item['numberOfCustomerReviews']=numberOfReviews
-    
+      numberOfReviews = centerCol.xpath('//span[@id="acrCustomerReviewText"]/text()').extract()[0]
+      item['numberOfCustomerReviews']=numberOfReviews
+    except:
+      print "Item probably has no reviews"
+      
     try:
       strikePrice = centerCol.xpath('//div[@id="price"]//td[@class="a-span12 a-color-secondary a-size-base a-text-strike"]/text()').extract()[0]
       item['strikePrice'] = strikePrice

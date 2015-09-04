@@ -11,6 +11,8 @@ import scrapy
 class AmazonItem(scrapy.Item):
     # define the Fields for your item here like:
     
+    productId = scrapy.Field()
+    productURL = scrapy.Field()    
     #alternate images
     altImages = scrapy.Field()
 
